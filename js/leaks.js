@@ -13,27 +13,31 @@ var drop_interval = 10;
 var gameloop = 0;
 var timer;
 
-$(document).ready(function(e) {
-	$(window).keydown(function(e) {keyPressed(e.keyCode); });
+
+window.addEventListener('load',  function() { onReady() });
+
+function onReady() {
+
+	document.addEventListener('keydown', function(e) {keyPressed(e.keyCode); });
 
 	//var ctx = $('#maincanvas')[0].getContext('2d');
 
 	gameloop = 0;
 	timer = setInterval(onTimer, 100);
-});
+}
 
 
 function onTimer() {
 
 	if ((gameloop % drop_interval) == 0) {
-		// get random number between 1 and 5 to use as index to leaks array		
+		// get random number between 1 and 5 to use as index to leaks array
 		var leakpos = Math.floor(Math.random()*6);
 		drops[leakpos]++;
 		debug();
 
 		// when a leak reaches the floor, stop the game loop
 		for (i=0; i<drops.length; i++) {
-			
+
 			if (drops[i] == 9 && bucket.pos == i) {
 				bucket.level++;
 				drops[i] = 0;
@@ -42,7 +46,7 @@ function onTimer() {
 			if (drops[i] == 10) {
 				clearInterval(timer);
 			}
-		}		
+		}
 	}
 
 	gameloop++;
@@ -63,14 +67,14 @@ function keyPressed(key) {
 
 		case 37 : moveLeft();
 		break;
-		
+
 		case 39 : moveRight();
 		break;
-		
+
 		case 32 : console.log('empty bucket');
-		break;								
+		break;
 	}
-	
+
 }
 
 
